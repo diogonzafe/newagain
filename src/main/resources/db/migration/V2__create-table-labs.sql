@@ -1,0 +1,8 @@
+CREATE TABLE labs (
+
+    id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+    andar TEXT UNIQUE NOT NULL,
+    lab TEXT NOT NULL,
+    description TEXT NOT NULL,
+    is_active INTEGER NOT NULL
+);
