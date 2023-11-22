@@ -27,4 +27,21 @@ public class Lab {
         this.description = body.description();
         this.is_active = body.is_active();
     }
+
+    public void setAndar(String andar) {
+        this.andar = andar;
+    }
+
+    public void setLab(String lab) {
+        this.lab = lab;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setIs_active(int is_active) {
+        this.is_active = is_active;
+    }
 }
+
