@@ -7,6 +7,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.Valid;
+
+
+
 @Table(name = "labs")
 @Entity(name = "Lab")
 @Getter
@@ -17,16 +21,22 @@ public class Lab {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String andar;
     private String lab;
     private String description;
     private int is_active;
 
-    public Lab(LabRequestDTO body) {
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+
+    public Lab(@Valid LabRequestDTO body) {
         this.lab = body.lab();
         this.andar = body.andar();
         this.description = body.description();
         this.is_active = body.is_active();
+        this.user = new User(body.userId());  // Criar uma instância de User usando o ID
     }
 
     public void setAndar(String andar) {
@@ -45,4 +55,5 @@ public class Lab {
         this.is_active = is_active;
     }
 }
+
 
