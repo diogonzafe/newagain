@@ -1,15 +1,16 @@
 package lab.stack.api.Model.Lab;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import lab.stack.api.Model.Lab_Payments.LabPayment;
 import lab.stack.api.Model.User.User;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import jakarta.validation.Valid;
-
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "labs")
 @Entity(name = "Lab")
@@ -30,6 +31,9 @@ public class Lab {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "lab", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LabPayment> labPayments = new HashSet<>();
 
     public Lab(@Valid LabRequestDTO body) {
         this.lab = body.lab();
@@ -54,6 +58,18 @@ public class Lab {
     public void setIs_active(int is_active) {
         this.is_active = is_active;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addLabPayment(LabPayment labPayment) {
+        labPayments.add(labPayment);
+        labPayment.setLab(this);
+    }
+
+    public void removeLabPayment(LabPayment labPayment) {
+        labPayments.remove(labPayment);
+        labPayment.setLab(null);
+    }
 }
-
-

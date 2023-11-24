@@ -1,12 +1,16 @@
 package lab.stack.api.Model.Payment;
 
 import jakarta.persistence.*;
+import lab.stack.api.Model.Lab_Payments.LabPayment;
 import lab.stack.api.Model.User.User;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "payment")
 @Table(name = "payment")
@@ -35,6 +39,9 @@ public class Payment {
     @Column(nullable = false)
     private String status;
 
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LabPayment> labPayments = new HashSet<>();
+
     public void setBoleto(String boleto) {
         this.boleto = boleto;
     }
@@ -43,6 +50,7 @@ public class Payment {
     public void setUser(User user) {
         this.user = user;
     }
+
     public void setUser(Long userId) {
         this.user = new User(userId);
     }
@@ -53,5 +61,15 @@ public class Payment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void addLabPayment(LabPayment labPayment) {
+        labPayments.add(labPayment);
+        labPayment.setPayment(this);
+    }
+
+    public void removeLabPayment(LabPayment labPayment) {
+        labPayments.remove(labPayment);
+        labPayment.setPayment(null);
     }
 }
