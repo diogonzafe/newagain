@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lab.stack.api.Model.Payment.BoletoRequest;
 import lab.stack.api.Model.Payment.Payment;
+import lab.stack.api.Model.User.User;
 import lab.stack.api.Repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -60,15 +61,14 @@ public class PaymentController {
 
                     // Extrair os dados necessários
                     String boleto = dataNode.get("boleto").asText();
-                    String userId = dataNode.get("user_id").asText();
+                    Long userId = dataNode.get("user_id").asLong();  // Supondo que o ID seja um número longo
                     String paymentDate = dataNode.get("payment_date").asText();
                     String status = dataNode.get("status").asText();
 
-
-                    // Criar uma instância da entidade Payment
+// Criar uma instância da entidade Payment
                     Payment payment = new Payment();
                     payment.setBoleto(boleto);
-                    payment.setUserId(userId);
+                    payment.setUser(userId);
                     payment.setPaymentDate(paymentDate);
                     payment.setStatus(status);
 

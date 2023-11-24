@@ -13,8 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "Users")
 @Entity(name = "User")
+@Table(name = "Users")
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -92,6 +93,10 @@ public class User implements UserDetails {
 
     public String getPhone() {
         return phone;
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 
     public void setPhone(String phone) {

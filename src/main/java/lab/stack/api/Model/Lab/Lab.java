@@ -1,6 +1,7 @@
 package lab.stack.api.Model.Lab;
 
 import jakarta.persistence.*;
+import lab.stack.api.Model.User.User;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
